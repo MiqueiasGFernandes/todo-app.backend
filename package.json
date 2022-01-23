@@ -33,6 +33,7 @@
     "@typescript-eslint/parser": "^5.10.0",
     "eslint": "^8.7.0",
     "eslint-config-airbnb-base": "^15.0.0",
+    "eslint-import-resolver-typescript": "^2.5.0",
     "eslint-plugin-import": "^2.25.4",
     "git-commit-msg-linter": "^4.0.7",
     "husky": "^7.0.4",
