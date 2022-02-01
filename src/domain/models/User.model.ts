@@ -1,7 +1,7 @@
 import { List } from './List.model';
 
 export type User = {
-  id?: string
+  id: string | null
   name: string
   password: string
   email: string
