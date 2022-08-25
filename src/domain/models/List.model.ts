@@ -5,7 +5,7 @@ export default class List {
 
   name: string;
 
-  description: string;
+  description?: string | null;
 
   icon: string;
 
