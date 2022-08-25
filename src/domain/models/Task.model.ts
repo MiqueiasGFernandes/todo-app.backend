@@ -1,8 +1,11 @@
-import { List } from './List.model';
+import List from './List.model';
 
-export type Task = {
-  id: string
-  description: string
+export default class Task {
+  id: string;
+
+  description: string;
+
   done: boolean;
-  list: List
+
+  list: List;
 }

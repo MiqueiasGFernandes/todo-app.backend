@@ -1,6 +1,9 @@
-export type Token = {
-  id: string
-  value: string
-  expired: boolean
-  ttl: number
+export default class Token {
+  id: string;
+
+  value: string;
+
+  expired: boolean;
+
+  ttl: number;
 }
