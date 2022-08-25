@@ -1,6 +1,4 @@
-import Task from './Task.model';
-
-export default class List {
+export default class CreateLisDto {
   id: string;
 
   name: string;
@@ -8,6 +6,4 @@ export default class List {
   description?: string | null;
 
   icon?: string | null;
-
-  tasks: Task[];
 }
