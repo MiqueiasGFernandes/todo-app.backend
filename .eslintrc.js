@@ -22,6 +22,7 @@ module.exports = {
     'import'
   ],
   rules: {
+    'semi': 'off',
     'import/extensions': [
       'error',
       'ignorePackages',
