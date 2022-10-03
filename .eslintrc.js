@@ -23,6 +23,7 @@ module.exports = {
   ],
   rules: {
     'semi': 'off',
+    '@typescript-eslint/no-explicit-any': 'off',
     'import/extensions': [
       'error',
       'ignorePackages',
