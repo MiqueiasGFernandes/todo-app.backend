@@ -2,7 +2,9 @@ import IDataSourceProtocol from '@data/protocols/database/DataSource.protocol';
 import IUserRepository from '@data/protocols/repositories/UserRepository.protocol';
 import UserModel from '@domain/models/User.model';
 import { PartialType } from '@domain/use-cases/_support/types/Partial.type';
+import { injectable } from 'tsyringe';
 
+@injectable()
 export default class UserRepository implements IUserRepository {
   private readonly databaseSourceProtocol: IDataSourceProtocol;
 
