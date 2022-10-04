@@ -13,5 +13,6 @@ module.exports = {
     '@data/(.*)': '<rootDir>/src/data/$1',
     '@infra/(.*)': '<rootDir>/src/infra/$1',
     '@tests/(.*)': '<rootDir>/src/tests/$1',
+    '@presentation/(.*)': '<rootDir>/src/presentation/$1',
   },
 };
