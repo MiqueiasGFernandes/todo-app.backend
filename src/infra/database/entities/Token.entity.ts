@@ -1,8 +1,10 @@
 import {
-  Column, CreateDateColumn, PrimaryColumn, UpdateDateColumn,
+  BaseEntity,
+  Column, CreateDateColumn, Entity, PrimaryColumn, UpdateDateColumn,
 } from 'typeorm';
 
-export default class Token {
+@Entity()
+export default class Token extends BaseEntity {
   @PrimaryColumn()
     id: string;
 

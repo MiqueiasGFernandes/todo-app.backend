@@ -1,9 +1,11 @@
 import {
-  Column, CreateDateColumn, PrimaryColumn, UpdateDateColumn,
+  BaseEntity,
+  Column, CreateDateColumn, Entity, PrimaryColumn, UpdateDateColumn,
 } from 'typeorm';
 import List from './List.entity';
 
-export default class Task {
+@Entity()
+export default class Task extends BaseEntity {
   @PrimaryColumn()
     id: string;
 
