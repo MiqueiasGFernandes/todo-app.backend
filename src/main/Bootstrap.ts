@@ -1,6 +1,9 @@
+import 'reflect-metadata';
+
 import IConfigProtocol from '@data/protocols/config/Config.protocol';
 import UserContainer from '@data/use-cases/user/User.container';
 import ConfigContainer from '@infra/config/Config.container';
+import DataSourceContainer from '@infra/database/data-source/DataSource.container';
 import UserControllerContainer from '@presentation/controllers/UserControllers.container';
 import HttpApplication from '@presentation/http/HttpApplication';
 import HttpApplicationContainer from '@presentation/http/HttpApplication.container';
@@ -13,6 +16,7 @@ export default class Bootstrap {
 
   static initInfraContainers(): void {
     ConfigContainer.inject()
+    DataSourceContainer.inject()
   }
 
   static initPresentationContainers(): void {
@@ -27,7 +31,7 @@ export default class Bootstrap {
   }
 
   static async initConfig(): Promise<void> {
-    const config = container.resolve<IConfigProtocol>('IConfigProtocol')
+    const config = container.resolve<IConfigProtocol>('ConfigProtocol')
 
     await config.init()
   }
