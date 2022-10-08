@@ -1,10 +1,23 @@
 import IDataSourceProtocol from '@data/protocols/database/DataSource.protocol';
 import { PartialType } from '@domain/use-cases/_support/types/Partial.type';
+import { injectable } from 'tsyringe';
 import { BaseEntity } from 'typeorm';
 import ModelToEntityFactory from '../mappers/ModelToEntity.factory';
+import DataSourceConnection from './DataSource.config';
 
+@injectable()
 export default class TypeOrmDataSourceAdapter implements IDataSourceProtocol {
+  private readonly isConnected: boolean = false;
+
+  private readonly dataSourceConnection: DataSourceConnection
+
+  constructor(dataSourceConnection: DataSourceConnection) {
+    this.dataSourceConnection = dataSourceConnection;
+  }
+
   async create<T>(data: T): Promise<T> {
+    await this.dataSourceConnection.connect(this.isConnected)
+
     const entity: BaseEntity = ModelToEntityFactory.makeEntity<T>(data)
 
     const entitySaved: BaseEntity = await entity.save()
@@ -16,31 +29,43 @@ export default class TypeOrmDataSourceAdapter implements IDataSourceProtocol {
     return model
   }
 
-  update<T>(id: string, data: PartialType<T>): Promise<T> {
+  async update<T>(id: string, data: PartialType<T>): Promise<T> {
+    await this.dataSourceConnection.connect(this.isConnected)
+
     throw new Error('Method not implemented.');
   }
 
-  delete<T>(id: string): Promise<T> {
+  async delete<T>(id: string): Promise<T> {
+    await this.dataSourceConnection.connect(this.isConnected)
+
     throw new Error('Method not implemented.');
   }
 
-  findOneById<T>(id: string): Promise<T> {
+  async findOneById<T>(id: string): Promise<T> {
+    await this.dataSourceConnection.connect(this.isConnected)
+
     throw new Error('Method not implemented.');
   }
 
-  findOneByFields<T>(
+  async findOneByFields<T>(
     fields:
     { [K in keyof T]?: string | number | boolean | Date | undefined; },
   ): Promise<T> {
+    await this.dataSourceConnection.connect(this.isConnected)
+
     throw new Error('Method not implemented.');
   }
 
-  findAll<T>(): Promise<T> {
+  async findAll<T>(): Promise<T> {
+    await this.dataSourceConnection.connect(this.isConnected)
+
     throw new Error('Method not implemented.');
   }
 
-  countByFields<T>(fields:
+  async countByFields<T>(fields:
     { [K in keyof T]?: string | number | boolean | Date | undefined; }): Promise<number> {
+    await this.dataSourceConnection.connect(this.isConnected)
+
     throw new Error('Method not implemented.');
   }
 }
