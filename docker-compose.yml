@@ -1,8 +1,24 @@
 version: '3'
+secrets:
+  postgres_password:
+    file: ./secrets/postgres-password.secret
 services:
   cache:
     image: redis
+    command: redis-server --requirepass $${REDIS_PASSWORD}
     ports:
       - 6379:6379
     volumes:
-      -data/data
+      - ./docker/data/redis:/data
+  database:
+    image: postgres
+    environment:
+      - POSTGRES_PASSWORD=/run/secrets/postgres-password.secret
+      - PG_DATA=/var/lib/postgresql/data/pgdata
+      - REDIS_PASSWORD=/run/secrets/redis-password.secret
+    ports:
+      - 5432:5432
+    volumes:
+      - ./docker/data/pg:/var/lib/postgresql/data
+    
+    
