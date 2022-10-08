@@ -8,6 +8,7 @@ import UserControllerContainer from '@presentation/controllers/UserControllers.c
 import HttpApplication from '@presentation/http/HttpApplication';
 import HttpApplicationContainer from '@presentation/http/HttpApplication.container';
 import { container } from 'tsyringe';
+import PasswordValidatorContainer from '@infra/password-validator/PasswordValidator.container';
 
 export default class Bootstrap {
   static initDomainContainers(): void {
@@ -17,6 +18,7 @@ export default class Bootstrap {
   static initInfraContainers(): void {
     ConfigContainer.inject()
     DataSourceContainer.inject()
+    PasswordValidatorContainer.inject()
   }
 
   static initPresentationContainers(): void {
