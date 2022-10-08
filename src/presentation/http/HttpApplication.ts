@@ -16,6 +16,10 @@ export default class HttpApplication {
 
     app.use('/', UserRoutes.register());
 
-    app.listen(this.config.getString('APP_PORT'))
+    const port: number = this.config.getNumber('APP_PORT') as number;
+
+    app.listen(port)
+
+    console.log(`Application started at port: ${port}`)
   }
 }
