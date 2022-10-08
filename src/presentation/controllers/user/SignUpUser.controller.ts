@@ -1,4 +1,4 @@
-import { injectable } from 'tsyringe';
+import { inject, injectable } from 'tsyringe';
 import { Request, Response } from 'express';
 import { IAddUserUseCase } from '@domain/use-cases/user/AddUser.use-case';
 import CreateUserDto from '@presentation/dto/user/CreateUser.dto';
@@ -7,7 +7,7 @@ import CreateUserDto from '@presentation/dto/user/CreateUser.dto';
 export default class SignUpController {
   private readonly addUser: IAddUserUseCase
 
-  constructor(addUser: IAddUserUseCase) {
+  constructor(@inject('AddUser') addUser: IAddUserUseCase) {
     this.addUser = addUser;
   }
 

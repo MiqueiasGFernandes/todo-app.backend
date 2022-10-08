@@ -2,7 +2,9 @@ import dotenv from 'dotenv';
 
 import IConfigProtocol from '@data/protocols/config/Config.protocol';
 import InvalidConfigException from '@domain/exceptions/InvalidConfig.exception';
+import { injectable } from 'tsyringe';
 
+@injectable()
 export default class EnvConfigAdapter implements IConfigProtocol {
   init(): void {
     dotenv.config({
