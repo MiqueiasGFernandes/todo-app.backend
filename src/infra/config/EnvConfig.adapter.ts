@@ -3,13 +3,20 @@ import dotenv from 'dotenv';
 import IConfigProtocol from '@data/protocols/config/Config.protocol';
 import InvalidConfigException from '@domain/exceptions/InvalidConfig.exception';
 import { injectable } from 'tsyringe';
+import ConfigurationProviderInitException from '@domain/exceptions/ConfigurationProviderInit.exception';
 
 @injectable()
 export default class EnvConfigAdapter implements IConfigProtocol {
   init(): void {
-    dotenv.config({
-      path: `${__dirname}../../../config/environment/.env`,
+    const { error } = dotenv.config({
+      path: `${__dirname}/../../../config/environment/.env`,
     })
+
+    if (error) {
+      throw new ConfigurationProviderInitException(`
+        An error has ocurrs loading configuration provider. Follow the details and try to change provider: '${error.message}'
+      `)
+    }
   }
 
   getString(key: string): string {
