@@ -7,19 +7,28 @@ import { inject, injectable } from 'tsyringe';
 export default class HttpApplication {
   private readonly config: IConfigProtocol
 
+  private expressApp: express.Express
+
   constructor(@inject('ConfigProtocol') config: IConfigProtocol) {
     this.config = config;
   }
 
-  init(): void {
-    const app = express();
+  initHttpApplication(): void {
+    this.expressApp = express();
 
-    app.use('/', UserRoutes.register());
+    this.expressApp.use('/', UserRoutes.register());
 
     const port: number = this.config.getNumber('APP_PORT') as number;
 
-    app.listen(port)
+    this.expressApp.listen(port)
 
     console.log(`Application started at port: ${port}`)
+  }
+
+  initHttpMiddlewares(): void {
+    this.expressApp.use(express.urlencoded({
+      extended: true,
+    }))
+    this.expressApp.use(express.json())
   }
 }

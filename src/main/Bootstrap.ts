@@ -31,7 +31,8 @@ export default class Bootstrap {
   static initHttpApplication(): void {
     const httpApplication: HttpApplication = HttpApplicationContainer.resolve<HttpApplication>('HttpApplication')
 
-    httpApplication.init()
+    httpApplication.initHttpApplication()
+    httpApplication.initHttpMiddlewares()
   }
 
   static async initConfig(): Promise<void> {
