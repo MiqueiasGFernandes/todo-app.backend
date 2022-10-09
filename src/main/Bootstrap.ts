@@ -9,6 +9,7 @@ import HttpApplication from '@presentation/http/HttpApplication';
 import HttpApplicationContainer from '@presentation/http/HttpApplication.container';
 import { container } from 'tsyringe';
 import PasswordValidatorContainer from '@infra/password-validator/PasswordValidator.container';
+import EncryptatorContainer from '@infra/encryptator/Encryptator.container';
 
 export default class Bootstrap {
   static initDomainContainers(): void {
@@ -19,6 +20,7 @@ export default class Bootstrap {
     ConfigContainer.inject()
     DataSourceContainer.inject()
     PasswordValidatorContainer.inject()
+    EncryptatorContainer.inject()
   }
 
   static initPresentationContainers(): void {

@@ -1,3 +1,4 @@
+import { IEncryptatorProtocol } from '@data/protocols/encryptator/Encryptator.protocol';
 import { IPasswordValidatorProtocol } from '@data/protocols/password-validator/PasswordValidator.protocol';
 import IUserRepository from '@data/protocols/repositories/UserRepository.protocol';
 import PasswordsDoNotMatchException from '@domain/exceptions/PasswordsDoNotMatch.exception';
@@ -13,12 +14,16 @@ export default class RemoteAddUser implements IAddUserUseCase {
 
   private readonly passwordValidator: IPasswordValidatorProtocol
 
+  private readonly encryptator: IEncryptatorProtocol
+
   constructor(
     @inject('UserRepository') userRepository: IUserRepository,
     @inject('PasswordValidator') passwordValidator: IPasswordValidatorProtocol,
+    @inject('EncryptatorProtocol') encryptator: IEncryptatorProtocol,
   ) {
     this.userRepository = userRepository;
     this.passwordValidator = passwordValidator;
+    this.encryptator = encryptator;
   }
 
   async add(user: User): Promise<User> {
@@ -32,6 +37,8 @@ export default class RemoteAddUser implements IAddUserUseCase {
       throw new StronglessPasswordException(`Your password is strongless, follow the password security patterns and try again: ${errors.join('; ')}`)
     }
 
+    const encryptedPassword: string = await this.encryptator.crypt(user.password)
+
     const userCount: number = await this.userRepository.countByEmail(user.email)
     const hasUser: boolean = userCount > 0
 
@@ -39,6 +46,9 @@ export default class RemoteAddUser implements IAddUserUseCase {
       throw new UserAlreadyExistsException(`An user with email: '${user.email}' already exists. Please, type an valid email and try again `)
     }
 
-    return this.userRepository.add(user);
+    return this.userRepository.add({
+      ...user,
+      password: encryptedPassword,
+    });
   }
 }
