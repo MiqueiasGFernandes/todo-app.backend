@@ -21,6 +21,8 @@ describe('RemoteAddUser', () => {
 
   describe('GIVEN add new User', () => {
     test('WHEN user is successfully added. SHOULD return created User data', async () => {
+      const passwordMockValue: string = faker.datatype.string(40)
+
       container
         .register('UserRepository', {
           useFactory: () => ({
@@ -39,6 +41,11 @@ describe('RemoteAddUser', () => {
             })),
           }),
         })
+        .register('EncryptatorProtocol', {
+          useFactory: () => ({
+            crypt: jest.fn(() => passwordMockValue),
+          }),
+        })
 
       const remoteAddUser: IAddUserUseCase = container.resolve<IAddUserUseCase>('AddUser')
 
@@ -54,7 +61,7 @@ describe('RemoteAddUser', () => {
 
       expect(sut).toHaveProperty('id')
       expect(sut).toHaveProperty('email', data.email)
-      expect(sut).toHaveProperty('password', data.password)
+      expect(sut).toHaveProperty('password', passwordMockValue)
       expect(sut).toHaveProperty('name', data.name)
     })
     test('WHEN user already exists. SHOULD informs that user with matching email already exists', async () => {
