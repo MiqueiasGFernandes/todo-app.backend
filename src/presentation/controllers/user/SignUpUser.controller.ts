@@ -30,6 +30,8 @@ export default class SignUpController {
 
       return response.json(data)
     } catch (error) {
+      console.error(error);
+
       return response.status(500).json({
         errorName: (<Error>error).name,
         message: (<Error>error).message,
