@@ -5,7 +5,7 @@ import {
 
 @Entity()
 export default class Token extends BaseEntity {
-  @PrimaryColumn()
+  @PrimaryColumn('varchar')
     id: string;
 
   @Column()

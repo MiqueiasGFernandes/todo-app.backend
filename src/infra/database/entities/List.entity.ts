@@ -1,24 +1,44 @@
 import {
-  BaseEntity, Column, CreateDateColumn, Entity, JoinColumn, PrimaryColumn, UpdateDateColumn,
+  BaseEntity,
+  Column,
+  CreateDateColumn,
+  Entity,
+  ManyToOne,
+  OneToMany,
+  PrimaryColumn,
+  UpdateDateColumn,
 } from 'typeorm';
 import Task from './Task.entity';
+import User from './User.entity';
 
 @Entity()
 export default class List extends BaseEntity {
-  @PrimaryColumn()
+  @PrimaryColumn('varchar')
     id: string;
 
-  @Column()
+  @Column('varchar')
     name: string;
 
-  @Column()
+  @Column('text')
     description: string;
 
-  @Column()
+  @Column('text')
     icon: string;
 
-  @JoinColumn()
-    tasks: Task[];
+  @Column('varchar')
+    userId: string
+
+  @OneToMany(
+    () => Task,
+    (task) => task.list,
+  )
+    tasks: Promise<Task[]>;
+
+  @ManyToOne(
+    () => User,
+    (user) => user.lists,
+  )
+    user: Promise<User>;
 
   @CreateDateColumn()
     createdAt: Date;

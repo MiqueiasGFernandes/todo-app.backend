@@ -1,6 +1,6 @@
 import { IEncryptatorProtocol } from '@data/protocols/encryptator/Encryptator.protocol';
 import { IPasswordValidatorProtocol } from '@data/protocols/password-validator/PasswordValidator.protocol';
-import IUserRepository from '@data/protocols/repositories/UserRepository.protocol';
+import IUserRepository from '@data/repositories/User.repository';
 import PasswordsDoNotMatchException from '@domain/exceptions/PasswordsDoNotMatch.exception';
 import StronglessPasswordException from '@domain/exceptions/StronglessPassword.exception';
 import UserAlreadyExistsException from '@domain/exceptions/UserAlreadyExists.exception';

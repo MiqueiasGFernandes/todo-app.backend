@@ -1,26 +1,26 @@
 import {
-  BaseEntity, Column, CreateDateColumn, Entity, JoinColumn, PrimaryColumn, UpdateDateColumn,
+  BaseEntity, Column, CreateDateColumn, Entity, OneToMany, PrimaryColumn, UpdateDateColumn,
 } from 'typeorm';
 import List from './List.entity';
 
 @Entity()
 export default class User extends BaseEntity {
-  @PrimaryColumn()
+  @PrimaryColumn('varchar')
     id: string | null;
 
-  @Column()
+  @Column('varchar')
     name: string;
 
-  @Column()
+  @Column('varchar')
     password: string;
 
-  @Column()
+  @Column('varchar')
     email: string;
 
-  @Column()
+  @Column('boolean')
     active: boolean;
 
-  @JoinColumn()
+  @OneToMany(() => List, (lists) => lists.user)
     lists?: List[];
 
   @CreateDateColumn()
