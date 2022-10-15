@@ -5,7 +5,7 @@
   "main": "src/index.js",
   "scripts": {
     "prepare": "husky install",
-    "start": "npm run dev",
+    "start": "npm run docker:up && npm run dev",
     "dev": "nodemon ./src/main/index.ts",
     "docker:up": "docker-compose up -d",
     "docker:down": "docker-compose down",
