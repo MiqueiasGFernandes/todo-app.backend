@@ -1,3 +1,3 @@
 export interface IDataSourceProtocol {
-  init(): void
+  init(): Promise<void>
 }

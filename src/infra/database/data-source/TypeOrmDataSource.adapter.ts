@@ -13,18 +13,19 @@ export default class TypeOrmDataSourceAdapter implements IDataSourceProtocol {
     this.config = config;
   }
 
-  init(): void {
+  async init(): Promise<void> {
     const host: string = this.config.getString('DB_HOST') as string
     const port: number = this.config.getNumber('DB_PORT') as number
     const username: string = this.config.getString('DB_USERNAME') as string
     const password: string = this.config.getString('DB_PASSWORD') as string
     const database: string = this.config.getString('DB_NAME') as string
     const environment: string = this.config.getString('ENV') as string
+    const logging: boolean = this.config.getBoolean('DB_LOG') as boolean
 
     const srcDir: string = environment === 'production' ? 'build' : 'src'
     const extension: string = environment === 'production' ? 'js' : 'ts'
 
-    new DataSource({
+    const dataSource = new DataSource({
       type: 'postgres',
       host,
       username,
@@ -35,9 +36,16 @@ export default class TypeOrmDataSourceAdapter implements IDataSourceProtocol {
         `${srcDir}/infra/database/entities/*.${extension}`,
       ],
       synchronize: true,
-      logging: true,
-    }).initialize().catch((error) => {
-      throw new DataSourceProviderException(`Error initializing the datasource provider, see more details: ${(<Error>error).message}`);
+      logging,
     })
+
+    await dataSource
+      .initialize()
+      .catch((error) => {
+        throw new DataSourceProviderException(`Error initializing the datasource provider, see more details: ${(<Error>error).message}`);
+      }).then(() => {
+        console.log(`Typeorm connected to the database: ${host}:${port}`)
+        console.log(logging ? 'Database query logging enabled' : 'Database query logging disabled')
+      })
   }
 }

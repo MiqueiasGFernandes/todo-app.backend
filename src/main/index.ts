@@ -4,7 +4,8 @@ Bootstrap.initDomainContainers()
 Bootstrap.initPresentationContainers()
 Bootstrap.initInfraContainers()
 Bootstrap.initConfig()
-  .then(() => {
+  .then(async () => {
+    await Bootstrap.initDataSources()
     Bootstrap.initHttpApplication()
   })
   .catch(((error) => console.error(error)));
