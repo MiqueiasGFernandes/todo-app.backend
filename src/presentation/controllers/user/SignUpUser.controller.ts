@@ -2,6 +2,7 @@ import { inject, injectable } from 'tsyringe';
 import { Request, Response } from 'express';
 import { IAddUserUseCase } from '@domain/use-cases/user/AddUser.use-case';
 import CreateUserDto from '@presentation/dto/user/CreateUser.dto';
+import ResponseCreateUserDto from '@presentation/dto/user/ResponseCreateUser.dto';
 
 @injectable()
 export default class SignUpController {
@@ -13,7 +14,7 @@ export default class SignUpController {
 
   async signUp(request: Request, response: Response): Promise<Response> {
     try {
-      const dto = new CreateUserDto({
+      const inputDto: CreateUserDto = new CreateUserDto({
         email: request.body.email,
         name: request.body.name,
         password: request.body.password,
@@ -21,14 +22,21 @@ export default class SignUpController {
       })
 
       const data = await this.addUser.add({
-        email: dto.email,
-        name: dto.name,
-        password: dto.password,
-        passwordConfirmation: dto.passwordConfirmation,
+        email: inputDto.email,
+        name: inputDto.name,
+        password: inputDto.password,
+        passwordConfirmation: inputDto.passwordConfirmation,
         active: false,
       })
 
-      return response.json(data)
+      const outputDto: ResponseCreateUserDto = new ResponseCreateUserDto({
+        id: data.id as string,
+        active: data.active,
+        email: data.email,
+        name: data.name,
+      })
+
+      return response.json(outputDto)
     } catch (error) {
       console.error(error);
 
