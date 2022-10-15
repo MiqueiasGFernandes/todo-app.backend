@@ -8,17 +8,17 @@ import express from 'express';
 export default class HttpApplication {
   private readonly config: IConfigProtocol
 
-  private expressApp: express.Express
+  private expressApp: express.Express = express();
 
   constructor(@inject('ConfigProtocol') config: IConfigProtocol) {
     this.config = config;
   }
 
   initHttpApplication(): void {
-    this.expressApp = express();
+    this.expressApp.use(timeoutMiddleware('5s'))
+    this.expressApp.use(express.json())
 
     this.expressApp.use('/', UserRoutes.register());
-    this.expressApp.use(timeoutMiddleware('5s'))
 
     const port: number = this.config.getNumber('APP_PORT') as number;
 
