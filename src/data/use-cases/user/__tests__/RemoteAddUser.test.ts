@@ -8,6 +8,7 @@ import { faker } from '@faker-js/faker';
 
 import { container } from 'tsyringe';
 import { IPasswordValidatorProtocol } from '@data/protocols/password-validator/PasswordValidator.protocol';
+import { IIdGeneratorProtocol } from '@data/protocols/id-generator/IdGenerator.protocol';
 import UserContainer from '../User.container';
 
 const STRONGLESS_PASSWORD = 'less'
@@ -44,6 +45,11 @@ describe('RemoteAddUser', () => {
         .register('EncryptatorProtocol', {
           useFactory: () => ({
             crypt: jest.fn(() => passwordMockValue),
+          }),
+        })
+        .register('IdGeneratorProtocol', {
+          useFactory: (): MockType<IIdGeneratorProtocol> => ({
+            generate: jest.fn(() => Promise.resolve(faker.datatype.uuid())),
           }),
         })
 
