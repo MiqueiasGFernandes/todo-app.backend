@@ -7,7 +7,7 @@ import { injectable } from 'tsyringe';
 export default class OwaspPasswordStrengthTest implements IPasswordValidatorProtocol {
   validate(password: string): PasswordValidatorResponseType {
     const { errors } = owasp.test(password)
-    const isValid: boolean = errors.length > 0
+    const isValid: boolean = errors.length === 0
 
     return {
       errors,
