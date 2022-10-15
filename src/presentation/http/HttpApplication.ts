@@ -1,7 +1,8 @@
 import IConfigProtocol from '@data/protocols/config/Config.protocol';
 import UserRoutes from '@presentation/controllers/user/User.routes';
-import express from 'express';
 import { inject, injectable } from 'tsyringe';
+import timeoutMiddleware from 'connect-timeout';
+import express from 'express';
 
 @injectable()
 export default class HttpApplication {
@@ -17,6 +18,7 @@ export default class HttpApplication {
     this.expressApp = express();
 
     this.expressApp.use('/', UserRoutes.register());
+    this.expressApp.use(timeoutMiddleware('5s'))
 
     const port: number = this.config.getNumber('APP_PORT') as number;
 
