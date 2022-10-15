@@ -1,16 +1,17 @@
 import 'reflect-metadata';
 
 import IConfigProtocol from '@data/protocols/config/Config.protocol';
+import { IDataSourceProtocol } from '@data/protocols/data-source/DataSource.protocol';
 import UserContainer from '@data/use-cases/user/User.container';
 import ConfigContainer from '@infra/config/Config.container';
+import DataSourceContainer from '@infra/database/DataSource.container';
 import EncryptatorContainer from '@infra/encryptator/Encryptator.container';
+import IdGeneratorContainer from '@infra/id-generator/IdGenerator.container';
 import PasswordValidatorContainer from '@infra/password-validator/PasswordValidator.container';
 import UserControllerContainer from '@presentation/controllers/UserControllers.container';
 import HttpApplication from '@presentation/http/HttpApplication';
 import HttpApplicationContainer from '@presentation/http/HttpApplication.container';
 import { container } from 'tsyringe';
-import { IDataSourceProtocol } from '@data/protocols/data-source/DataSource.protocol';
-import DataSourceContainer from '@infra/database/DataSource.container';
 
 export default class Bootstrap {
   static initDomainContainers(): void {
@@ -22,6 +23,7 @@ export default class Bootstrap {
     PasswordValidatorContainer.inject()
     EncryptatorContainer.inject()
     DataSourceContainer.inject()
+    IdGeneratorContainer.inject()
   }
 
   static initPresentationContainers(): void {

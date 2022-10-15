@@ -1,4 +1,5 @@
 import { IEncryptatorProtocol } from '@data/protocols/encryptator/Encryptator.protocol';
+import { IIdGeneratorProtocol } from '@data/protocols/id-generator/IdGenerator.protocol';
 import { IPasswordValidatorProtocol } from '@data/protocols/password-validator/PasswordValidator.protocol';
 import IUserRepository from '@data/repositories/User.repository';
 import PasswordsDoNotMatchException from '@domain/exceptions/PasswordsDoNotMatch.exception';
@@ -16,14 +17,18 @@ export default class RemoteAddUser implements IAddUserUseCase {
 
   private readonly encryptator: IEncryptatorProtocol
 
+  private readonly idGenerator: IIdGeneratorProtocol
+
   constructor(
     @inject('UserRepository') userRepository: IUserRepository,
     @inject('PasswordValidator') passwordValidator: IPasswordValidatorProtocol,
     @inject('EncryptatorProtocol') encryptator: IEncryptatorProtocol,
+    @inject('IdGeneratorProtocol') idGenerator: IIdGeneratorProtocol,
   ) {
     this.userRepository = userRepository;
     this.passwordValidator = passwordValidator;
     this.encryptator = encryptator;
+    this.idGenerator = idGenerator;
   }
 
   async add(user: User): Promise<User> {
@@ -46,8 +51,11 @@ export default class RemoteAddUser implements IAddUserUseCase {
       throw new UserAlreadyExistsException(`An user with email: '${user.email}' already exists. Please, type an valid email and try again `)
     }
 
+    const generatedId: string = await this.idGenerator.generate()
+
     return this.userRepository.add({
       ...user,
+      id: generatedId,
       password: encryptedPassword,
     });
   }
