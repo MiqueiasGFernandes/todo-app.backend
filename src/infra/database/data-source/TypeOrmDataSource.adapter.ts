@@ -24,6 +24,7 @@ export default class TypeOrmDataSourceAdapter implements IDataSourceProtocol {
 
     const srcDir: string = environment === 'production' ? 'build' : 'src'
     const extension: string = environment === 'production' ? 'js' : 'ts'
+    const synchronize: boolean = environment !== 'production'
 
     const dataSource = new DataSource({
       type: 'postgres',
@@ -35,7 +36,7 @@ export default class TypeOrmDataSourceAdapter implements IDataSourceProtocol {
       entities: [
         `${srcDir}/infra/database/entities/*.${extension}`,
       ],
-      synchronize: true,
+      synchronize,
       logging,
     })
 

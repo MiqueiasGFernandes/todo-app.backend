@@ -3,7 +3,7 @@ import {
   Column, CreateDateColumn, Entity, PrimaryColumn, UpdateDateColumn,
 } from 'typeorm';
 
-@Entity()
+@Entity('tokens')
 export default class Token extends BaseEntity {
   @PrimaryColumn('varchar')
     id: string;
@@ -20,6 +20,6 @@ export default class Token extends BaseEntity {
   @CreateDateColumn()
     createdAt: Date;
 
-  @UpdateDateColumn()
+  @UpdateDateColumn({ nullable: true })
     updatedAt?: Date;
 }

@@ -3,7 +3,7 @@ import {
 } from 'typeorm';
 import List from './List.entity';
 
-@Entity()
+@Entity('users')
 export default class User extends BaseEntity {
   @PrimaryColumn('varchar')
     id: string | null;
@@ -26,6 +26,6 @@ export default class User extends BaseEntity {
   @CreateDateColumn()
     createdAt: Date;
 
-  @UpdateDateColumn()
+  @UpdateDateColumn({ nullable: true })
     updatedAt?: Date;
 }

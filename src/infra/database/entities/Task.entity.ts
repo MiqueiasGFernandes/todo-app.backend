@@ -4,15 +4,15 @@ import {
 } from 'typeorm';
 import List from './List.entity';
 
-@Entity()
+@Entity('tasks')
 export default class Task extends BaseEntity {
   @PrimaryColumn('varchar')
     id: string;
 
-  @Column('varchar')
+  @Column('varchar', { nullable: true })
     description: string;
 
-  @Column('boolean')
+  @Column('boolean', { default: false })
     done: boolean;
 
   @Column('varchar')
@@ -25,6 +25,6 @@ export default class Task extends BaseEntity {
   @CreateDateColumn()
     createdAt: Date;
 
-  @UpdateDateColumn()
+  @UpdateDateColumn({ nullable: true })
     updatedAt?: Date;
 }

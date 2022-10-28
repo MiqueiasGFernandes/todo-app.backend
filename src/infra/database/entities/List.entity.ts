@@ -11,7 +11,7 @@ import {
 import Task from './Task.entity';
 import User from './User.entity';
 
-@Entity()
+@Entity('lists')
 export default class List extends BaseEntity {
   @PrimaryColumn('varchar')
     id: string;
@@ -19,10 +19,10 @@ export default class List extends BaseEntity {
   @Column('varchar')
     name: string;
 
-  @Column('text')
+  @Column('text', { nullable: true })
     description: string;
 
-  @Column('text')
+  @Column('text', { nullable: true })
     icon: string;
 
   @Column('varchar')
@@ -43,6 +43,6 @@ export default class List extends BaseEntity {
   @CreateDateColumn()
     createdAt: Date;
 
-  @UpdateDateColumn()
+  @UpdateDateColumn({ nullable: true })
     updatedAt?: Date;
 }
