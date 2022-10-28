@@ -3,13 +3,21 @@ import { Request, Response } from 'express';
 import { IAddUserUseCase } from '@domain/use-cases/user/AddUser.use-case';
 import CreateUserDto from '@presentation/dto/user/CreateUser.dto';
 import ResponseCreateUserDto from '@presentation/dto/user/ResponseCreateUser.dto';
+import InputValidationException from '@domain/exceptions/InputValidation.exception';
+import { IValidatorProtocol } from '@data/protocols/validator/Validator.protocol';
 
 @injectable()
 export default class SignUpController {
   private readonly addUser: IAddUserUseCase
 
-  constructor(@inject('AddUser') addUser: IAddUserUseCase) {
+  private readonly validator: IValidatorProtocol
+
+  constructor(
+    @inject('AddUser') addUser: IAddUserUseCase,
+    @inject('Validator') validator: IValidatorProtocol,
+  ) {
     this.addUser = addUser;
+    this.validator = validator
   }
 
   async signUp(request: Request, response: Response): Promise<Response> {
@@ -19,6 +27,10 @@ export default class SignUpController {
         name: request.body.name,
         password: request.body.password,
         passwordConfirmation: request.body.passwordConfirmation,
+      })
+
+      await this.validator.validate(inputDto).catch((errors: string[]) => {
+        throw new InputValidationException(`Input validation errors: ${errors.join(', ')}`)
       })
 
       const data = await this.addUser.add({

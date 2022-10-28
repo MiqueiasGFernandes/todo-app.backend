@@ -48,7 +48,7 @@ export default class RemoteAddUser implements IAddUserUseCase {
     const hasUser: boolean = userCount > 0
 
     if (hasUser) {
-      throw new UserAlreadyExistsException(`An user with email: '${user.email}' already exists. Please, type an valid email and try again `)
+      throw new UserAlreadyExistsException(`An user with email: '${user.email}' already exists. Please, type a valid email and try again `)
     }
 
     const generatedId: string = await this.idGenerator.generate()

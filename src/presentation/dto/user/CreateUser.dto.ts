@@ -1,30 +1,38 @@
-import MaxLength from '@data/protocols/input-validation/decorators/MaxLength.decorator';
-import Required from '@data/protocols/input-validation/decorators/Required.decorator';
-import IsString from '@data/protocols/input-validation/decorators/IsString.decorator';
-import MinLength from '@data/protocols/input-validation/decorators/MinLength.decorator';
-import IsEmail from '@data/protocols/input-validation/decorators/IsEmail.decorator';
+import MessagesConstant from '@infra/validator/constants/Messages.constant';
+import {
+  IsEmail, IsNotEmpty, IsString, MaxLength,
+} from 'class-validator';
 
 export default class CreateUserDto {
   constructor(data: CreateUserDto) {
     Object.assign(this, data);
   }
 
-  @Required()
-  @IsString()
-  @MaxLength(255)
+  @IsString({ message: MessagesConstant.IS_STRING })
+  @MaxLength(500, {
+    message: MessagesConstant.MAX_LENGTH,
+  })
+  @IsNotEmpty({ message: MessagesConstant.IS_REQUIRED })
     name: string;
 
-  @Required()
-  @IsString()
-  @MinLength(6)
+  @IsString({ message: MessagesConstant.IS_STRING })
+  @MaxLength(1000, {
+    message: MessagesConstant.MAX_LENGTH,
+  })
+  @IsNotEmpty({ message: MessagesConstant.IS_REQUIRED })
     password: string;
 
-  @Required()
-  @IsString()
+  @IsString({ message: MessagesConstant.IS_STRING })
+  @MaxLength(1000, {
+    message: MessagesConstant.MAX_LENGTH,
+  })
+  @IsNotEmpty({ message: MessagesConstant.IS_REQUIRED })
     passwordConfirmation: string
 
-  @Required()
-  @IsEmail()
-  @MaxLength(255)
+  @IsEmail({ message: MessagesConstant.IS_EMAIL })
+  @MaxLength(1000, {
+    message: MessagesConstant.MAX_LENGTH,
+  })
+  @IsNotEmpty({ message: MessagesConstant.IS_REQUIRED })
     email: string;
 }
