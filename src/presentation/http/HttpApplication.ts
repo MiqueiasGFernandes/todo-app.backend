@@ -1,8 +1,7 @@
 import IConfigProtocol from '@data/protocols/config/Config.protocol';
 import UserRoutes from '@presentation/controllers/user/User.routes';
-import { inject, injectable } from 'tsyringe';
-import timeoutMiddleware from 'connect-timeout';
 import express from 'express';
+import { inject, injectable } from 'tsyringe';
 
 @injectable()
 export default class HttpApplication {
@@ -15,7 +14,6 @@ export default class HttpApplication {
   }
 
   initHttpApplication(): void {
-    this.expressApp.use(timeoutMiddleware('5s'))
     this.expressApp.use(express.json())
 
     this.expressApp.use('/', UserRoutes.register());
