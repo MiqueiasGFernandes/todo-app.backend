@@ -5,5 +5,7 @@ export default class Token {
 
   expired: boolean;
 
-  ttl: number;
+  ttl?: number | null;
+
+  userId: string
 }

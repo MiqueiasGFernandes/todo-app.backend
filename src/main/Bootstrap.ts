@@ -13,6 +13,7 @@ import HttpApplication from '@presentation/http/HttpApplication';
 import HttpApplicationContainer from '@presentation/http/HttpApplication.container';
 import { container } from 'tsyringe';
 import ValidatorContainer from '@infra/validator/Validator.container';
+import JwtSignerContainer from '@infra/jwt/JwtSigner.container';
 
 export default class Bootstrap {
   static initDomainContainers(): void {
@@ -26,6 +27,7 @@ export default class Bootstrap {
     DataSourceContainer.inject()
     IdGeneratorContainer.inject()
     ValidatorContainer.inject()
+    JwtSignerContainer.inject()
   }
 
   static initPresentationContainers(): void {
@@ -42,9 +44,11 @@ export default class Bootstrap {
   }
 
   static async initDataSources(): Promise<void> {
-    const dataSource: IDataSourceProtocol = HttpApplicationContainer.resolve<IDataSourceProtocol>('DataSource')
+    const database: IDataSourceProtocol = HttpApplicationContainer.resolve<IDataSourceProtocol>('DatabaseDataSource')
+    const cache: IDataSourceProtocol = HttpApplicationContainer.resolve<IDataSourceProtocol>('CacheDataSource')
 
-    await dataSource.init()
+    await database.init()
+    await cache.init()
   }
 
   static async initConfig(): Promise<void> {

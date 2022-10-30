@@ -48,7 +48,9 @@ export default class SignUpController {
         name: data.name,
       })
 
-      return response.json(outputDto)
+      return response
+        .status(201)
+        .json(outputDto)
     } catch (error) {
       console.error(error);
 
