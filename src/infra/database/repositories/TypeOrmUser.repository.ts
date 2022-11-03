@@ -21,8 +21,20 @@ export default class TypeOrmUserRepository implements IUserRepository {
     throw new Error('Method not implemented.');
   }
 
-  findOne(id: string): Promise<UserModel | null | undefined> {
-    throw new Error('Method not implemented.');
+  async findOneOrFail(id: string): Promise<UserModel> {
+    const userTypeOrmEntity: UserEntity = await UserEntity.findOneByOrFail({
+      id,
+    })
+
+    const user = new UserModel()
+
+    user.id = userTypeOrmEntity.id
+    user.active = userTypeOrmEntity.active
+    user.email = userTypeOrmEntity.email
+    user.name = userTypeOrmEntity.name
+    user.password = userTypeOrmEntity.password
+
+    return user
   }
 
   update(id: string, data: UserModel): Promise<string> {
