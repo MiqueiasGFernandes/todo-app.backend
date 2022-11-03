@@ -21,7 +21,7 @@ export default class User extends BaseEntity {
     active: boolean;
 
   @OneToMany(() => List, (lists) => lists.user)
-    lists?: List[];
+    lists?: Promise<List[]>;
 
   @CreateDateColumn()
     createdAt: Date;
