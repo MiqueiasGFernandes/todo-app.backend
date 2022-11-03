@@ -25,7 +25,7 @@ export default class RemoteLoginUser implements ILoginUserUseCase {
   private readonly idGenerator: IIdGeneratorProtocol
 
   constructor(
-    @inject('UserRepository') userRepository: IUserRepository,
+  @inject('UserRepository') userRepository: IUserRepository,
     @inject('TokenRepository') tokenRepository: ITokenRepository,
     @inject('JwtSigner') jwtSigner: IJwtSignerProtocol,
     @inject('IdGeneratorProtocol') idGenerator: IIdGeneratorProtocol,
@@ -61,8 +61,8 @@ export default class RemoteLoginUser implements ILoginUserUseCase {
     const token: Token = await this.tokenRepository.add({
       id: jwtId,
       value: jwtValue,
-      expired: false,
-      userId: user.id as string,
+      subject: user.id,
+      createdAt: new Date(),
     })
 
     return token

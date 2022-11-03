@@ -1,11 +1,11 @@
 export default class Token {
-  id: string;
+  id?: string | null
 
-  value: string;
+  value: string
 
-  expired: boolean;
+  expiration?: string | number | null
 
-  ttl?: number | null;
+  subject?: string | null
 
-  userId: string
+  createdAt?: Date | string
 }
