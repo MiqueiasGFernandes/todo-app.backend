@@ -1,3 +1,3 @@
 export type MockType<T> = {
-  [K in keyof T]: jest.Mock<object>
+  [K in keyof T]?: jest.Mock<any>
 }
