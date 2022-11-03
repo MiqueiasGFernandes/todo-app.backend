@@ -7,8 +7,8 @@ module.exports = {
   },
   extends: [
     'airbnb-base',
-    "plugin:@typescript-eslint/recommended",
-    "plugin:@typescript-eslint/recommended-requiring-type-checking",
+    'plugin:@typescript-eslint/recommended',
+    'plugin:@typescript-eslint/recommended-requiring-type-checking',
   ],
   parser: '@typescript-eslint/parser',
   parserOptions: {
@@ -28,6 +28,9 @@ module.exports = {
     '@typescript-eslint/no-unsafe-assignment': 'off',
     '@typescript-eslint/no-misused-promises': 'off',
     'class-methods-use-this': 'off',
+    'indent': 'off',
+    '@typescript-eslint/indent': ['error', 2],
+    'eol-last': ['error', 'always'],
     'import/extensions': [
       'error',
       'ignorePackages',
