@@ -2,7 +2,7 @@ import { inject, injectable } from 'tsyringe';
 import { Request, Response } from 'express';
 import { IAddUserUseCase } from '@domain/use-cases/user/AddUser.use-case';
 import CreateUserDto from '@presentation/dto/user/CreateUser.dto';
-import ResponseCreateUserDto from '@presentation/dto/user/ResponseCreateUser.dto';
+import ResponseCreateUserDto from '@presentation/dto/user/ResponseUser.dto';
 import InputValidationException from '@domain/exceptions/InputValidation.exception';
 import { IValidatorProtocol } from '@data/protocols/validator/Validator.protocol';
 
@@ -13,7 +13,7 @@ export default class SignUpController {
   private readonly validator: IValidatorProtocol
 
   constructor(
-    @inject('AddUser') addUser: IAddUserUseCase,
+  @inject('AddUser') addUser: IAddUserUseCase,
     @inject('Validator') validator: IValidatorProtocol,
   ) {
     this.addUser = addUser;

@@ -1,5 +1,5 @@
-export default class ResponseCreateUserDto {
-  constructor(data: ResponseCreateUserDto) {
+export default class ResponseUserDto {
+  constructor(data: ResponseUserDto) {
     Object.assign(this, data);
   }
 
