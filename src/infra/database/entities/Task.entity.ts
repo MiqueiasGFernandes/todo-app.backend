@@ -19,7 +19,9 @@ export default class Task extends BaseEntity {
     listId: number;
 
   @JoinColumn({ name: 'listId' })
-  @ManyToOne(() => List, (list) => list.tasks)
+  @ManyToOne(() => List, (list) => list.tasks, {
+    onDelete: 'CASCADE',
+  })
     list?: Promise<List>;
 
   @CreateDateColumn()

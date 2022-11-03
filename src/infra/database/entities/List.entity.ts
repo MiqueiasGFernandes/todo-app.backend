@@ -37,6 +37,9 @@ export default class List extends BaseEntity {
   @ManyToOne(
     () => User,
     (user) => user.lists,
+    {
+      onDelete: 'CASCADE',
+    },
   )
     user: Promise<User>;
 
