@@ -1,3 +1,3 @@
 export interface IInactiveUserUseCase {
-  inactive(id: string): Promise<string>
+  inactive(id: string): Promise<void>
 }

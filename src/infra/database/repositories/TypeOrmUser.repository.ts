@@ -3,6 +3,10 @@ import UserModel from '@domain/models/User.model';
 import UserEntity from '../entities/User.entity';
 
 export default class TypeOrmUserRepository implements IUserRepository {
+  count(id: string): Promise<number> {
+    return UserEntity.countBy({ id })
+  }
+
   async add(data: UserModel): Promise<UserModel> {
     const userTypeOrmEntity: UserEntity = new UserEntity()
 
@@ -17,8 +21,8 @@ export default class TypeOrmUserRepository implements IUserRepository {
     return data
   }
 
-  delete(id: string): Promise<string> {
-    throw new Error('Method not implemented.');
+  async delete(id: string): Promise<void> {
+    await UserEntity.delete(id)
   }
 
   async findOneOrFail(id: string): Promise<UserModel> {
