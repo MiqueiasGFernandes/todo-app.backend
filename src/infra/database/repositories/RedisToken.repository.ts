@@ -5,6 +5,14 @@ import RedisDataSourceAdapter from '../data-source/RedisDataSource.adapter';
 
 @injectable()
 export default class RedisTokenRepository implements ITokenRepository {
+  async delete(id: string): Promise<void> {
+    const { client } = RedisDataSourceAdapter
+
+    const key = `token_subject-id:${id}`
+
+    await client.del(key)
+  }
+
   async findOneByOrFail(params: { subjectId: string }): Promise<TokenModel> {
     const { client } = RedisDataSourceAdapter
 
@@ -14,7 +22,7 @@ export default class RedisTokenRepository implements ITokenRepository {
       return Promise.reject()
     }
 
-    const token = JSON.parse(strToken) as TokenModel
+    const token = JSON.parse(strToken).token as TokenModel
 
     return token
   }

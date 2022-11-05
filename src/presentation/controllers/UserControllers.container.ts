@@ -1,6 +1,7 @@
 import MainContainer from '@data/di/MainContainer';
 import { container } from 'tsyringe';
 import InactiveUserController from './user/InactiveUser.controller';
+import SignOutUserController from './user/SignOutUser.controller';
 import SignUpController from './user/SignUpUser.controller';
 import SignInUserController from './user/SingInUser.controller';
 import UserInformationController from './user/UserInformation.controller';
@@ -19,6 +20,9 @@ export default class UserControllerContainer extends MainContainer {
       })
       .register('InactiveUserController', {
         useClass: InactiveUserController,
+      })
+      .register('SignOutUserController', {
+        useClass: SignOutUserController,
       })
   }
 }
