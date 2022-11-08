@@ -5,6 +5,7 @@ import SignOutUserController from './user/SignOutUser.controller';
 import SignUpController from './user/SignUpUser.controller';
 import SignInUserController from './user/SingInUser.controller';
 import UserInformationController from './user/UserInformation.controller';
+import UserUpdateController from './user/UserUpdate.controller';
 
 export default class UserControllerContainer extends MainContainer {
   static inject(): void {
@@ -23,6 +24,9 @@ export default class UserControllerContainer extends MainContainer {
       })
       .register('SignOutUserController', {
         useClass: SignOutUserController,
+      })
+      .register('UserUpdateController', {
+        useClass: UserUpdateController,
       })
   }
 }

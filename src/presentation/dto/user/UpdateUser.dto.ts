@@ -1,11 +1,14 @@
-export default class UpdateUser {
-  id?: string | null;
+import MessagesConstant from '@infra/validator/constants/Messages.constant';
+import { IsString, MaxLength } from 'class-validator';
 
-  name?: string | null;
+export default class UpdateUserDto {
+  constructor(data: UpdateUserDto) {
+    Object.assign(this, data);
+  }
 
-  password?: string | null;
-
-  email?: string | null;
-
-  active?: boolean | null;
+  @IsString({ message: MessagesConstant.IS_STRING })
+  @MaxLength(500, {
+    message: MessagesConstant.MAX_LENGTH,
+  })
+    name?: string | null;
 }

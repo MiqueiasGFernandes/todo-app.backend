@@ -1,5 +1,5 @@
 import User from '@domain/models/User.model';
 
 export interface IUpdateUserUseCase {
-  update(user: User): Promise<User>
+  update(user: {[K in keyof User]?: unknown }): Promise<void>
 }

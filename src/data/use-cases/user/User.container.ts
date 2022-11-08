@@ -4,10 +4,12 @@ import { IGetCurrentUserInformationUseCase } from '@domain/use-cases/user/GetCur
 import { IInactiveUserUseCase } from '@domain/use-cases/user/InactiveUser.use-case';
 import { ILoginUserUseCase } from '@domain/use-cases/user/LoginUser.use-case';
 import { ISignoutUserUseCase } from '@domain/use-cases/user/SignoutUser.use-case';
+import { IUpdateUserUseCase } from '@domain/use-cases/user/UpdateUser.use-case';
 import { container } from 'tsyringe';
 import RemoteAddUser from './RemoteAddUser';
 import RemoteInactiveUser from './RemoteInactiveUser';
 import RemoteLoginUser from './RemoteLoginUser';
+import RemoteUpdateUser from './RemoteUpdateUser';
 import RemoteUserInformation from './RemoteUserInformation';
 import RemoteUserSignOut from './RemoteUserSignOut';
 
@@ -28,6 +30,9 @@ export default class UserContainer extends MainContainer {
     })
       .register<ISignoutUserUseCase>('SignOutUser', {
       useClass: RemoteUserSignOut,
+    })
+      .register<IUpdateUserUseCase>('UpdateUser', {
+      useClass: RemoteUpdateUser,
     })
   }
 }

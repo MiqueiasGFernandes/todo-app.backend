@@ -1,5 +1,6 @@
 import IUserRepository from '@data/repositories/User.repository';
 import UserModel from '@domain/models/User.model';
+import { DeepPartial } from 'typeorm';
 import UserEntity from '../entities/User.entity';
 
 export default class TypeOrmUserRepository implements IUserRepository {
@@ -41,8 +42,11 @@ export default class TypeOrmUserRepository implements IUserRepository {
     return user
   }
 
-  update(id: string, data: UserModel): Promise<string> {
-    throw new Error('Method not implemented.');
+  async update(id: string, data: { [K in keyof UserModel]?: unknown }): Promise<void> {
+    await UserEntity.findOneByOrFail({
+      id,
+    })
+    await UserEntity.save(data as DeepPartial<UserEntity>)
   }
 
   async findByEmailAndPassword(email: string, password: string): Promise<UserModel | undefined> {
