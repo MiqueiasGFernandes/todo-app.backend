@@ -8,4 +8,5 @@ export default interface IUserRepository {
   findByEmailAndPassword(email: string, password: string): Promise<User | undefined>
   countByEmail(email: string): Promise<number>
   count(id: string): Promise<number>
+  findByIdAndPasswordOrFail(id: string, password: string): Promise<User>
 }

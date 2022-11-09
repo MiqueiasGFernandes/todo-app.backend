@@ -1,3 +1,8 @@
 export interface IChangeUserPasswordUseCase {
-  update(id: string, oldPassword: string, newPassword: string): Promise<string>
+  update(
+    id: string,
+    oldPassword: string,
+    newPassword: string,
+    newPasswordConfirmation: string
+  ): Promise<void>
 }

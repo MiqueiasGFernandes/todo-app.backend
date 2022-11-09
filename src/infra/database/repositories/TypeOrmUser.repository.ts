@@ -4,6 +4,20 @@ import { DeepPartial } from 'typeorm';
 import UserEntity from '../entities/User.entity';
 
 export default class TypeOrmUserRepository implements IUserRepository {
+  async findByIdAndPasswordOrFail(id: string, password: string): Promise<UserModel> {
+    const userTypeOrmEntity = await UserEntity.findOneByOrFail({ id, password })
+
+    const user = new UserModel()
+
+    user.id = userTypeOrmEntity.id
+    user.active = userTypeOrmEntity.active
+    user.email = userTypeOrmEntity.email
+    user.name = userTypeOrmEntity.name
+    user.password = userTypeOrmEntity.password
+
+    return user
+  }
+
   count(id: string): Promise<number> {
     return UserEntity.countBy({ id })
   }
@@ -46,7 +60,7 @@ export default class TypeOrmUserRepository implements IUserRepository {
     await UserEntity.findOneByOrFail({
       id,
     })
-    await UserEntity.save(data as DeepPartial<UserEntity>)
+    await UserEntity.save({ id, ...data } as DeepPartial<UserEntity>)
   }
 
   async findByEmailAndPassword(email: string, password: string): Promise<UserModel | undefined> {

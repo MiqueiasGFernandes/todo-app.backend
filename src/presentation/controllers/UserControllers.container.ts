@@ -5,6 +5,7 @@ import SignOutUserController from './user/SignOutUser.controller';
 import SignUpController from './user/SignUpUser.controller';
 import SignInUserController from './user/SingInUser.controller';
 import UserInformationController from './user/UserInformation.controller';
+import UserPasswordChangerController from './user/UserPasswordChanger.controller';
 import UserUpdateController from './user/UserUpdate.controller';
 
 export default class UserControllerContainer extends MainContainer {
@@ -27,6 +28,9 @@ export default class UserControllerContainer extends MainContainer {
       })
       .register('UserUpdateController', {
         useClass: UserUpdateController,
+      })
+      .register('UserPasswordChangerController', {
+        useClass: UserPasswordChangerController,
       })
   }
 }
