@@ -1,6 +1,7 @@
 module.exports = {
   collectCoverageFrom: [
-    '<rootDir>/src/data/use-cases/*.ts',
+    '<rootDir>/src/data/use-cases/**/*.ts',
+    '<rootDir>/src/infra/http/express/decorators/**/*.(util|decorator).ts',
   ],
   transform: {
     '^.+\\.ts?$': 'ts-jest',
